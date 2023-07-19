@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import NoteModel from "../models/note";
+import createHttpError from "http-errors";
 
 // creating an endpoint for a HTTP get request
 export const getNotes : RequestHandler = async (req, res, next) => {
@@ -23,11 +24,20 @@ export const getNote: RequestHandler = async (req, res, next) => {
 
 };
 
-export const createNote: RequestHandler = async (req, res, next) => {
+interface CreateNoteBody {
+    title?:  string,
+    text?: string,
+}
+
+export const createNote: RequestHandler<unknown, unknown, CreateNoteBody, unknown> = async (req, res, next) => {
     const title = req.body.title;
     const text = req.body.text;
     
     try {
+        if (!title) {
+            throw createHttpError(400, "Note must have a title.");
+        }
+
         const newNote = await NoteModel.create({
             title : title,
             text : text,
