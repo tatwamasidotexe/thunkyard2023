@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import NoteModel from "../models/note";
 import createHttpError from "http-errors";
+import mongoose from "mongoose";
 
 // creating an endpoint for a HTTP get request
 export const getNotes : RequestHandler = async (req, res, next) => {
@@ -16,6 +17,10 @@ export const getNotes : RequestHandler = async (req, res, next) => {
 export const getNote: RequestHandler = async (req, res, next) => {
     const noteId = req.params.noteId;
     try {
+
+        if(!mongoose.isValidObjectId(noteId)) {
+            throw createHttpError(400, "Invalid node ID.")
+        }
         const note = await NoteModel.findById(noteId).exec();
 
         if (!note) {
