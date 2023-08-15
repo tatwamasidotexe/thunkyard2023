@@ -17,7 +17,7 @@ export const getNotes : RequestHandler = async (req, res, next) => {
 export const getNote: RequestHandler = async (req, res, next) => {
     const noteId = req.params.noteId;
     try {
-
+        
         if(!mongoose.isValidObjectId(noteId)) {
             throw createHttpError(400, "Invalid node ID.")
         }
