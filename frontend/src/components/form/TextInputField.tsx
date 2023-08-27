@@ -12,7 +12,7 @@ interface TextInputFieldProps {
 
 const TextInputField = ({ name, label, register, registerOptions, error, ...props } : TextInputFieldProps) => {
     return (
-        <Form.Group className="mb-5" controlId={name + "-input"}>
+        <Form.Group className="mb-3" controlId={name + "-input"}>
             <Form.Label>{label}</Form.Label>
             <Form.Control 
                 {...props} 
