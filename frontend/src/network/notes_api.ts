@@ -27,7 +27,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
     const response = await fetchData("/api/users/signup", {
         method: "POST",
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
         },
         body: JSON.stringify(credentials),
     });
@@ -36,7 +36,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
 
 export interface LoginCredentials {
     username: string,
-    email: string,
+    password: string,
 }
 
 export async function login(credentials: LoginCredentials): Promise<User> {
@@ -51,7 +51,7 @@ export async function login(credentials: LoginCredentials): Promise<User> {
 }
 
 export async function logout() {
-    const response = await fetchData("/api/users/logout", { method: "POST" });
+    await fetchData("/api/users/logout", { method: "POST" });
 }
 
 export async function fetchNotes() : Promise<Note[]> {
